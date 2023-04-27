@@ -1,0 +1,115 @@
+@startuml
+
+class Address {
+  - id: int
+  - streetName: String
+  - houseNumber: String
+  - zipCode: String
+  - city: String
+  - country: String
+}
+
+class Department {
+  - departmentId: int
+  - departmentName: String
+}
+
+class User {
+  - userId: int
+  - username: String
+  - password: String
+  - employeeId: int
+}
+
+class Person {
+  - id: int
+  - firstName: String
+  - middelName: String
+  - lastName: String
+  - email: String
+  - phone: String
+  - address: Address
+  - birthDate: Date
+}
+
+class Employee {
+  - employeeId: int
+  - position: String
+  - salary: double
+  - hireDate: Date
+  - department: Department
+  - loginDetails: User
+}
+
+class Guest {
+  - guestId: int
+  - notes: String
+}
+
+class Room {
+  - roomNumber: int
+  - roomType: RoomType
+  - capacity: int
+  - pricePerNight: double
+  - description: String
+  - bedType: BedType
+}
+
+enum RoomType {
+  TWIN_STANDARD_ROOM
+  DOUBLE_STANDARD_ROOM
+  TRIPLE_ROOM
+  CANAL_VIEW_ROOM
+}
+
+enum BedType {
+  SINGLE
+  DOUBLE
+  KING_SIZE_BED
+  QUEEN_BED
+}
+
+class Payment {
+  - paymentId: int
+  - paymentMethod: String
+  - amountPaid: double
+  - deposit: double
+}
+
+enum PaymentStatus {
+  PENDING
+  CONFIRMED
+}
+
+class Reservation {
+  - reservationId: int
+  - guest: Guest
+  - room: Room
+  - payment: Payment
+  - checkInDate: Date
+  - checkOutDate: Date
+  - reservationStatus: ReservationStatus
+}
+
+enum ReservationStatus {
+  CONFIRMED
+  CANCELED
+  PENDING
+}
+
+Person <|-- Employee
+Person <|-- Guest
+
+Employee -> Department : works in
+Employee <- User : has a
+
+Reservation <- Guest : has
+Reservation -- Room : has
+Reservation -- Payment : has
+Reservation -- ReservationStatus : has
+Room -- RoomType : has a
+Room -- BedType : has
+Payment -- PaymentStatus : has
+Person <- Address : has
+@enduml
+
